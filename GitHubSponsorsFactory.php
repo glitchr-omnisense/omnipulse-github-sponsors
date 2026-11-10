@@ -1,10 +1,10 @@
 <?php
 
-namespace Omnifund\GitHubSponsors;
+namespace Omnipulse\GitHubSponsors;
 
-use Omnifund\Config;
-use Omnifund\ProviderFactory;
-use Omnifund\ProviderInterface;
+use Omnipulse\Config;
+use Omnipulse\ProviderFactory;
+use Omnipulse\ProviderInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -25,11 +25,11 @@ final class GitHubSponsorsFactory extends ProviderFactory
     protected function populate(Config $c): void
     {
         $c->defaults([
-            'omnifund.factory_name' => 'github-sponsors',
-            'omnifund.factory_title' => 'GitHub Sponsors',
-            'omnifund.required_options' => ['account', 'token'],
+            'omnipulse.factory_name' => 'github-sponsors',
+            'omnipulse.factory_title' => 'GitHub Sponsors',
+            'omnipulse.required_options' => ['account', 'token'],
             'endpoint' => GitHubSponsorsProvider::ENDPOINT,
-            'user_agent' => 'omnifund (+https://github.com/glitchr-omnisense/omnifund)',
+            'user_agent' => 'omnipulse (+https://github.com/glitchr-omnisense/omnipulse)',
         ]);
     }
 

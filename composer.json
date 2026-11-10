@@ -1,9 +1,17 @@
 {
-    "name": "omnifund/github-sponsors",
+    "name": "omnipulse/github-sponsors",
     "type": "library",
-    "description": "Omnifund's GitHub Sponsors, under any PHP host: a user's or an organization's listing read through GitHub's GraphQL API - its page, its goal, its tiers, the number of sponsors and the public ones.",
-    "keywords": ["sponsors", "github-sponsors", "github", "graphql", "funding", "framework-agnostic", "omnifund"],
-    "homepage": "https://github.com/glitchr-omnisense/omnifund-github-sponsors",
+    "description": "Omnipulse's GitHub Sponsors, under any PHP host: a user's or an organization's listing read through GitHub's GraphQL API - its page, its goal, its tiers, the number of sponsors and the public ones.",
+    "keywords": [
+        "sponsors",
+        "github-sponsors",
+        "github",
+        "graphql",
+        "funding",
+        "framework-agnostic",
+        "omnipulse"
+    ],
+    "homepage": "https://github.com/glitchr-omnisense/omnipulse-github-sponsors",
     "license": "MIT",
     "authors": [
         {
@@ -13,16 +21,19 @@
     ],
     "require": {
         "php": ">=8.2",
-        "omnisense/omnifund": "^1.0@dev",
+        "omnisense/omnipulse": "^1.0@dev",
         "symfony/http-client-contracts": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
         "symfony/http-client": "^6.4|^7.0|^8.0"
     },
+    "replace": {
+        "omnifund/github-sponsors": "self.version"
+    },
     "autoload": {
         "psr-4": {
-            "Omnifund\\GitHubSponsors\\": ""
+            "Omnipulse\\GitHubSponsors\\": ""
         },
         "exclude-from-classmap": [
             "/Tests/"
@@ -30,7 +41,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Omnifund\\GitHubSponsors\\Tests\\": "Tests/"
+            "Omnipulse\\GitHubSponsors\\Tests\\": "Tests/"
         }
     },
     "extra": {

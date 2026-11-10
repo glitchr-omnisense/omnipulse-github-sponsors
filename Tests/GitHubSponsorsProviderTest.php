@@ -1,14 +1,14 @@
 <?php
 
-namespace Omnifund\GitHubSponsors\Tests;
+namespace Omnipulse\GitHubSponsors\Tests;
 
-use Omnifund\Exception\InvalidConfigException;
-use Omnifund\Exception\ProviderException;
-use Omnifund\GitHubSponsors\GitHubSponsorsFactory;
-use Omnifund\GitHubSponsors\GitHubSponsorsProvider;
-use Omnifund\Model\Period;
-use Omnifund\Model\Sponsor;
-use Omnifund\Registry;
+use Omnipulse\Exception\InvalidConfigException;
+use Omnipulse\Exception\ProviderException;
+use Omnipulse\GitHubSponsors\GitHubSponsorsFactory;
+use Omnipulse\GitHubSponsors\GitHubSponsorsProvider;
+use Omnipulse\Model\Period;
+use Omnipulse\Model\Sponsor;
+use Omnipulse\Registry;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -47,7 +47,7 @@ final class GitHubSponsorsProviderTest extends TestCase
         self::assertSame('POST', $this->requests[0]['method']);
         self::assertSame('https://api.github.com/graphql', $this->requests[0]['url']);
         self::assertContains('Authorization: Bearer ghp_test', $this->header(0));
-        self::assertContains('User-Agent: omnifund (+https://github.com/glitchr-omnisense/omnifund)', $this->header(0));
+        self::assertContains('User-Agent: omnipulse (+https://github.com/glitchr-omnisense/omnipulse)', $this->header(0));
         $body = $this->body(0);
         self::assertSame(['login' => 'octo-studio'], $body['variables']);
         self::assertIsString($body['query']);

@@ -1,20 +1,20 @@
 <?php
 
-namespace Omnifund\GitHubSponsors\Tests;
+namespace Omnipulse\GitHubSponsors\Tests;
 
-use Omnifund\GitHubSponsors\GitHubSponsorsProvider;
+use Omnipulse\GitHubSponsors\GitHubSponsorsProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * omnifund/github-sponsors with no framework: every class of the package loaded in a PHP
+ * omnipulse/github-sponsors with no framework: every class of the package loaded in a PHP
  * process of its own, with nothing from outside but what it requires -
- * omnisense/omnifund and Symfony's HTTP client contracts (interfaces only): no framework, no other HTTP client, no application, even
+ * omnisense/omnipulse and Symfony's HTTP client contracts (interfaces only): no framework, no other HTTP client, no application, even
  * in the harness where they are installed beside it.
  */
 final class BareTest extends TestCase
 {
     private const FOREIGN = '~^(?:Symfony\\\\(?!Contracts\\\\HttpClient\\\\|Polyfill\\\\)|(?:Illuminate|Laravel|Doctrine|Twig|League|Nyholm|Omnibridge|Base|App|GuzzleHttp|Http)\\\\)~';
-    private const ALLOWED_FILES = '~/vendor/(?:omnisense/omnifund|symfony/http-client-contracts|composer)/|/vendor/autoload\.php$|^/omnifund/(?:core|plugins/github-sponsors)/~';
+    private const ALLOWED_FILES = '~/vendor/(?:omnisense/omnipulse|symfony/http-client-contracts|composer)/|/vendor/autoload\.php$|^/omnipulse/(?:core|plugins/github-sponsors)/~';
 
     public function testEveryClassLoadsWithTheRequiredPackagesAlone(): void
     {
@@ -45,6 +45,6 @@ final class BareTest extends TestCase
                 return $vendor.'/autoload.php';
             }
         }
-        self::markTestSkipped('No autoloader knows omnifund/github-sponsors\'s tests.');
+        self::markTestSkipped('No autoloader knows omnipulse/github-sponsors\'s tests.');
     }
 }

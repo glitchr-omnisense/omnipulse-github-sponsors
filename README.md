@@ -1,12 +1,15 @@
-# omnifund/github-sponsors
+# omnipulse/github-sponsors
 
-GitHub Sponsors for [omnisense/omnifund](https://github.com/glitchr-omnisense/omnifund), under any
+GitHub Sponsors for [omnisense/omnipulse](https://github.com/glitchr-omnisense/omnipulse), under any
 PHP host: a user's or an organization's listing read through GitHub's GraphQL API - its page,
 its goal, its tiers, the number of sponsors and the public ones.
 
+Formerly `omnifund/github-sponsors` (omnifund merged into omnipulse on 2026-11-10: `Omnifund\GitHubSponsors\` is now
+`Omnipulse\GitHubSponsors\`; this package replaces the former name).
+
 ```php
-use Omnifund\GitHubSponsors\GitHubSponsorsFactory;
-use Omnifund\Registry;
+use Omnipulse\GitHubSponsors\GitHubSponsorsFactory;
+use Omnipulse\Registry;
 
 $registry = new Registry([new GitHubSponsorsFactory($httpClient)], [
     'github' => ['factory' => 'github-sponsors', 'options' => ['account' => 'glitchr-studio', 'token' => $token]],

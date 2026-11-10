@@ -1,6 +1,6 @@
-# omnifund/github-sponsors
+# omnipulse/github-sponsors
 
-GitHub Sponsors for [omnisense/omnifund](https://github.com/glitchr-omnisense/omnifund): a user's
+GitHub Sponsors for [omnisense/omnipulse](https://github.com/glitchr-omnisense/omnipulse): a user's
 or an organization's GitHub Sponsors listing read through GitHub's GraphQL API
 (`POST https://api.github.com/graphql`, or a GitHub Enterprise endpoint) - its page, its goal, its
 tiers, the number of sponsors and the public ones. Two queries: the listing (the account, its
@@ -9,10 +9,10 @@ listing, its active goal, its first 100 tiers, the sponsors counted) and the spo
 ## Installation
 
 ```sh
-composer require omnifund/github-sponsors symfony/http-client
+composer require omnipulse/github-sponsors symfony/http-client
 ```
 
-Requires PHP 8.2, `omnisense/omnifund` (1.x) and `symfony/http-client-contracts` (^3.0): the
+Requires PHP 8.2, `omnisense/omnipulse` (1.x) and `symfony/http-client-contracts` (^3.0): the
 application gives the HTTP client (`symfony/http-client`, or any implementation of the
 contracts) to the factory's constructor.
 
@@ -33,7 +33,7 @@ Sponsors account is needed to read someone else's listing.
 | `account` | string | - | yes | the user or organization whose listing is read: `glitchr-studio` |
 | `token` | string | - | yes | the token, sent as `Authorization: Bearer` |
 | `endpoint` | string | `https://api.github.com/graphql` | no | GitHub Enterprise: `https://HOST/api/graphql` |
-| `user_agent` | string | `omnifund (+https://github.com/glitchr-omnisense/omnifund)` | no | sent with every call (GitHub refuses a request without one) |
+| `user_agent` | string | `omnipulse (+https://github.com/glitchr-omnisense/omnipulse)` | no | sent with every call (GitHub refuses a request without one) |
 
 `create()` without `account` or `token` is an `InvalidConfigException`
 (`The "github-sponsors" provider needs: token.`).
@@ -85,8 +85,8 @@ application/json`, and `{"query", "variables"}`. A GraphQL `errors` member is a
 
 require __DIR__.'/vendor/autoload.php';
 
-use Omnifund\GitHubSponsors\GitHubSponsorsFactory;
-use Omnifund\Registry;
+use Omnipulse\GitHubSponsors\GitHubSponsorsFactory;
+use Omnipulse\Registry;
 use Symfony\Component\HttpClient\HttpClient;
 
 $registry = new Registry([new GitHubSponsorsFactory(HttpClient::create(['timeout' => 10]))], [
@@ -115,7 +115,7 @@ GitHub Sponsors (profile sponsors tiers): Octo Studio, 3 sponsors, goal $500 a m
 ```
 
 In Symfony, the factory as a service and the registry given to it: [the core's Symfony
-page](https://github.com/glitchr-omnisense/omnifund/blob/1.x/docs/symfony.md).
+page](https://github.com/glitchr-omnisense/omnipulse/blob/1.x/docs/symfony.md).
 
 ## Errors
 
@@ -134,7 +134,7 @@ goal counted in sponsors, every sponsor page after page, a limit asking no more 
 account GitHub does not know, an account without a listing, a bad token, the factory's required
 options, the provider built. Green in the family's harness on 2026-10-26. Live (README,
 2026-10-24, a token): glitchr-studio's listing; sindresorhus's tiers and two sponsors
-(`Tests/LiveTest.php`, group `live`, needs `OMNIFUND_GITHUB_TOKEN`). Not verified live: an active
+(`Tests/LiveTest.php`, group `live`, needs `OMNIPULSE_GITHUB_TOKEN`). Not verified live: an active
 goal (none at hand).
 
 ## Responsibility
