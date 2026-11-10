@@ -1,0 +1,55 @@
+{
+    "$schema": "https://github.com/glitchr-omnisense/contracts/blob/1.x/resources/usage-policy.schema.json",
+    "provider": "github-sponsors",
+    "rateLimits": [
+        {
+            "max": 5000,
+            "window": "hour",
+            "scope": "key",
+            "operations": [],
+            "unit": "points",
+            "note": "GraphQL primary limit: 5,000 points an hour per user (10,000 for a GitHub App of an Enterprise Cloud organization; up to 12,500 per App installation). A query costs at least one point (more with many nodes): the guard counts one per call, a lower bound; GitHub's x-ratelimit-* fields (read with their epoch reset) hold the rest."
+        },
+        {
+            "max": 2000,
+            "window": "minute",
+            "scope": "key",
+            "operations": [],
+            "unit": "points",
+            "note": "GraphQL secondary limit: no more than 2,000 points a minute."
+        }
+    ],
+    "concurrency": 100,
+    "rights": {
+        "commercial": "unknown",
+        "openSourceRequired": null,
+        "caching": {
+            "permission": "unknown",
+            "maxTtl": null
+        },
+        "storage": "unknown",
+        "redistribution": "unknown",
+        "attribution": {
+            "required": false,
+            "text": null,
+            "url": null,
+            "where": []
+        },
+        "licence": null
+    },
+    "requirements": {
+        "key": true,
+        "userAgent": {
+            "required": true,
+            "pattern": null
+        }
+    },
+    "provenance": {
+        "terms": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+        "policy": "https://docs.github.com/en/graphql/overview/rate-limits-and-node-limits-for-the-graphql-api",
+        "verifiedAt": "2026-11-10",
+        "declaredBy": "maintainer",
+        "contact": "https://support.github.com/",
+        "notes": "Read on 2026-11-10: 5,000 points an hour per user, 2,000 points a minute, 100 concurrent requests (shared with REST: concurrency); a secondary limit answers 200 or 403 with Retry-After. The Terms of Service (H, API Terms) forbid sharing tokens to exceed the limits and may suspend abusive use; they set nothing on commercial use, caching or storage of what the API gives: unknown. The GitHub Sponsors Additional Terms do not address a third party showing sponsors. GitHub asks every API request for a User-Agent (the provider sends one)."
+    }
+}

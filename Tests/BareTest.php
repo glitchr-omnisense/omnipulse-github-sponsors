@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 final class BareTest extends TestCase
 {
     private const FOREIGN = '~^(?:Symfony\\\\(?!Contracts\\\\HttpClient\\\\|Polyfill\\\\)|(?:Illuminate|Laravel|Doctrine|Twig|League|Nyholm|Omnibridge|Base|App|GuzzleHttp|Http)\\\\)~';
-    private const ALLOWED_FILES = '~/vendor/(?:omnisense/omnipulse|symfony/http-client-contracts|composer)/|/vendor/autoload\.php$|^/omnipulse/(?:core|plugins/github-sponsors)/~';
+    private const ALLOWED_FILES = '~/vendor/(?:omnisense/omnipulse|omnisense/contracts|symfony/http-client-contracts|composer)/|/vendor/autoload\.php$|^/omnisense/contracts/|^/omnipulse/(?:core|plugins/github-sponsors)/~';
 
     public function testEveryClassLoadsWithTheRequiredPackagesAlone(): void
     {

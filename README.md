@@ -40,6 +40,15 @@ and the [GraphQL rate limits](https://docs.github.com/en/graphql/overview/rate-l
 (5,000 points an hour per token): cache what you read; the profile and tiers cost one query, each
 page of sponsors one more.
 
+## Usage policy
+
+GitHub Sponsors's usage policy is declared as data in [`policy.json`](policy.json) (omnisense/contracts'
+schema, named in `composer.json`'s `extra.omnisense.policy`), its terms read on
+2026-11-10 (https://docs.github.com/en/graphql/overview/rate-limits-and-node-limits-for-the-graphql-api): 5,000 points an hour and 2,000 a minute per token (GraphQL, written as `points`, counted one per call: a lower bound; GitHub's `x-ratelimit-*` fields read with their epoch reset), 100 concurrent requests; rights unknown; a token and a User-Agent. omnipulse's registry enforces it - a call over a
+limit is never made, a 429 and its `Retry-After` hold every next call
+(`UsageLimitReachedException`) - and a site may tighten it, never loosen it
+(omnisense/omnipulse's docs/policies.md).
+
 ## Verified, and not
 
 - Verified on recorded answers (the shapes of live answers of 2026-10-24, the people invented),

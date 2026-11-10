@@ -5,6 +5,7 @@ namespace Omnipulse\GitHubSponsors;
 use Omnipulse\Config;
 use Omnipulse\ProviderFactory;
 use Omnipulse\ProviderInterface;
+use Omnisense\Contracts\Policy\LegacyReset;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -35,6 +36,6 @@ final class GitHubSponsorsFactory extends ProviderFactory
 
     protected function build(Config $c): ProviderInterface
     {
-        return new GitHubSponsorsProvider($this->http, (string) $c->string('account'), (string) $c->string('token'), $c->string('endpoint') ?? GitHubSponsorsProvider::ENDPOINT, (string) $c->string('user_agent'));
+        return new GitHubSponsorsProvider($this->http, (string) $c->string('account'), (string) $c->string('token'), $c->string('endpoint') ?? GitHubSponsorsProvider::ENDPOINT, (string) $c->string('user_agent'), $c->backoff()?->withLegacyHeaders(LegacyReset::Epoch));
     }
 }

@@ -14,6 +14,9 @@ use Omnipulse\Model\Tier;
 use Omnipulse\ProfileInterface;
 use Omnipulse\SponsorsInterface;
 use Omnipulse\TiersInterface;
+use Omnisense\Contracts\Policy\Backoff;
+use Omnisense\Contracts\Policy\DeclaresUsagePolicyInterface;
+use Omnisense\Contracts\Policy\UsagePolicy;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -22,8 +25,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  * a private sponsor is counted by GitHub and never listed. GitHub gives no
  * public income: Profile::$income stays null.
  */
-final class GitHubSponsorsProvider implements ProfileInterface, SponsorsInterface, TiersInterface
+final class GitHubSponsorsProvider implements ProfileInterface, SponsorsInterface, TiersInterface, DeclaresUsagePolicyInterface
 {
+    /** GitHub Sponsors's usage policy, as its terms read on the day it says (provenance.verifiedAt). */
+    public const POLICY = __DIR__.'/policy.json';
+
+    private static ?UsagePolicy $policy = null;
+
     public const ENDPOINT = 'https://api.github.com/graphql';
 
     private const LISTING = 'query($login: String!) { repositoryOwner(login: $login) { login url avatarUrl ... on Sponsorable { hasSponsorsListing sponsors { totalCount } sponsorsListing { name shortDescription url isPublic activeGoal { kind title description percentComplete targetValue } tiers(first: 100) { nodes { id name description monthlyPriceInCents isOneTime isCustomAmount } } } } ... on User { name } ... on Organization { name } } }';
@@ -38,6 +46,7 @@ final class GitHubSponsorsProvider implements ProfileInterface, SponsorsInterfac
         private readonly string $token,
         private readonly string $endpoint = self::ENDPOINT,
         private readonly string $userAgent = 'omnipulse (+https://github.com/glitchr-omnisense/omnipulse)',
+        private readonly ?Backoff $backoff = null,
     ) {
     }
 
@@ -51,13 +60,20 @@ final class GitHubSponsorsProvider implements ProfileInterface, SponsorsInterfac
         return 'GitHub Sponsors';
     }
 
+    public function usagePolicy(): UsagePolicy
+    {
+        return self::$policy ??= UsagePolicy::fromFile(self::POLICY);
+    }
+
     public function capabilities(): Capabilities
     {
         return new Capabilities(profile: true, sponsors: true, tiers: true, key: true, terms: [
             'https://docs.github.com/en/site-policy/github-terms/github-terms-of-service',
             'https://docs.github.com/en/site-policy/github-terms/github-sponsors-additional-terms',
             'https://docs.github.com/en/graphql/overview/rate-limits-and-node-limits-for-the-graphql-api',
-        ]);
+        ],
+            policy: $this->usagePolicy(),
+        );
     }
 
     public function profile(?string $account = null): Profile
@@ -153,7 +169,7 @@ final class GitHubSponsorsProvider implements ProfileInterface, SponsorsInterfac
         $answer = Json::request($this->http, 'POST', $this->endpoint, [
             'headers' => ['Authorization' => 'Bearer '.$this->token, 'User-Agent' => $this->userAgent, 'Accept' => 'application/json'],
             'json' => ['query' => $query, 'variables' => $variables],
-        ], 'GitHub', $what);
+        ], 'GitHub', $what, $this->backoff);
         if ([] !== $errors = Json::list($answer, 'errors')) {
             throw ProviderException::answered('GitHub', $what, implode('; ', array_map(static fn ($e) => Json::string($e, 'message') ?? '?', $errors)));
         }
