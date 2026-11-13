@@ -7,6 +7,37 @@ its goal, its tiers, the number of sponsors and the public ones.
 Formerly `omnifund/github-sponsors` (omnifund merged into omnipulse on 2026-11-10: `Omnifund\GitHubSponsors\` is now
 `Omnipulse\GitHubSponsors\`; this package replaces the former name).
 
+## Install and a first call
+
+```sh
+composer require omnipulse/github-sponsors
+```
+
+No account for this first call: GitHub's GraphQL answer is recorded
+(`Omnipulse\Testing\RecordedHttpClient` answers in place of the API), so nothing leaves the process.
+A real call needs a GitHub token: GitHub answers no anonymous GraphQL call, but any token reads
+public listings (a fine-grained token with no permission is enough).
+
+```php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Omnipulse\GitHubSponsors\GitHubSponsorsFactory;
+use Omnipulse\Testing\RecordedHttpClient;
+
+// GitHub's GraphQL answer, recorded: nothing sent. HttpClient::create() (symfony/http-client) for a real call.
+$http = RecordedHttpClient::routes([
+    'POST /graphql' => '{"data": {"repositoryOwner": {"login": "octo-studio", "name": "Octo Studio", "url": "https://github.com/octo-studio", "hasSponsorsListing": true, "sponsors": {"totalCount": 3}, "sponsorsListing": {"name": "sponsors-octo-studio", "shortDescription": "Support Octo Studio\'s open source work", "url": "https://github.com/sponsors/octo-studio", "isPublic": true}}}}',
+]);
+$sponsors = (new GitHubSponsorsFactory($http))->create(['account' => 'octo-studio', 'token' => 'recorded']);
+
+$profile = $sponsors->profile();
+echo $profile->name, ': ', $profile->sponsors, " sponsors\n";   // Octo Studio: 3 sponsors
+```
+
+With your credentials, through the family's registry:
+
 ```php
 use Omnipulse\GitHubSponsors\GitHubSponsorsFactory;
 use Omnipulse\Registry;
